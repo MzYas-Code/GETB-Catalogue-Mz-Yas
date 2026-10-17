@@ -218,6 +218,61 @@
             line-height: 1.6;
         }
 
+        /* Budget Section Card Style */
+        .budget-card {
+            background: linear-gradient(135deg, #003366 0%, #001f3f 100%);
+            border-radius: 16px;
+            padding: 20px;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 51, 102, 0.15);
+            margin-bottom: 24px;
+        }
+
+        .budget-card-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: #ffffff;
+        }
+
+        .budget-card-title i {
+            color: #f87171;
+        }
+
+        .budget-card-desc {
+            font-size: 12px;
+            color: #cbd5e1;
+            margin-bottom: 14px;
+        }
+
+        .budget-select-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .budget-select-main {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 2px solid #38bdf8;
+            background-color: #ffffff;
+            color: #0f172a;
+            font-size: 14px;
+            font-weight: 700;
+            outline: none;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+
+        .budget-select-main:focus {
+            border-color: #e11b22;
+            box-shadow: 0 0 0 3px rgba(225, 27, 34, 0.3);
+        }
+
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -387,6 +442,17 @@
             font-size: 12px;
             color: #003366;
             margin-top: 4px;
+        }
+
+        .budget-filter-badge {
+            display: inline-block;
+            background-color: #fee2e2;
+            color: #e11b22;
+            font-weight: 700;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-top: 6px;
         }
 
         .products-grid {
@@ -770,75 +836,84 @@
                         </div>
                         
                         <p class="agent-desc">
-                            Selamat datang! Sila klik mana-mana jenis perlindungan di bawah untuk meneroka pelan pilihan anda.
+                            Selamat datang! Pilih bajet bulanan anda atau klik jenis perlindungan di bawah untuk penerokaan pelan.
                         </p>
                     </div>
                 </div>
             </section>
 
             <section id="categories-view">
+                <!-- Budget Filter Card on First Page -->
+                <div class="budget-card">
+                    <div class="budget-card-title">
+                        <i class="fa-solid fa-calculator"></i>
+                        <span>Pilih Bajet Bulanan Anda</span>
+                    </div>
+                    <p class="budget-card-desc">Sistem akan menyaring & menunjukkan pelan takaful mengikut bajet bulanan anda.</p>
+                    <div class="budget-select-wrapper">
+                        <select id="mainBudgetFilter" class="budget-select-main" onchange="handleBudgetFilterChange()">
+                            <option value="ALL">--Pilih Budget Anda--</option>
+                            <option value="<100">&lt; RM100</option>
+                            <option value="100-200">RM100 - RM200</option>
+                            <option value="200-300">RM200 - RM300</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="section-header">
                     <h3><i class="fa-solid fa-layer-group"></i> Pilih Jenis Perlindungan</h3>
-                    <span>Klik kad untuk lihat pelan</span>
+                    <span id="categoryCountBadge">4 Pilihan Perkhidmatan</span>
                 </div>
 
                 <div class="categories-banners-grid">
-                    <!-- Category 1: Medikal Kad -->
-                    <div onclick="openCategory('medikal')" class="category-banner-card">
-                        <div>
-                            <div class="category-banner-icon">
-                                <i class="fa-solid fa-hospital-user"></i>
-                            </div>
-                            <h4>1. Medikal Kad</h4>
-                            <p>Rawatan hospital tanpa tunai & perlindungan perubatan komprehensif tanpa pusing kepala!</p>
+                    <!-- Banner 1: Hibah & Perlindungan Hayat -->
+                    <div class="category-banner-card" id="banner-hibah" onclick="openCategoryView('hibah')">
+                        <div class="category-banner-icon">
+                            <i class="fa-solid fa-hand-holding-heart"></i>
                         </div>
+                        <h4>Hibah & Perlindungan Hayat</h4>
+                        <p>Sediakan dana warisan serta-merta & pelindung kewangan keluarga tersayang.</p>
                         <div class="category-banner-footer">
-                            <span>Mula Terokai Pelan Medikal</span>
+                            <span>Lihat Pelan Hibah</span>
                             <i class="fa-solid fa-arrow-right"></i>
                         </div>
                     </div>
 
-                    <!-- Category 2: Pampasan Sakit Kritikal -->
-                    <div onclick="openCategory('ci')" class="category-banner-card">
-                        <div>
-                            <div class="category-banner-icon">
-                                <i class="fa-solid fa-heart-pulse"></i>
-                            </div>
-                            <h4>2. Sakit Kritikal</h4>
-                            <p>Dapatkan pampasan tunai terus untuk kelangsungan hidup apabila diuji penyakit berat.</p>
+                    <!-- Banner 2: Kad Perubatan / Hospital -->
+                    <div class="category-banner-card" id="banner-medical" onclick="openCategoryView('medical')">
+                        <div class="category-banner-icon">
+                            <i class="fa-solid fa-hospital-user"></i>
                         </div>
+                        <h4>Kad Perubatan / Hospital</h4>
+                        <p>Jaminan rawatan hospital swasta tanpa tunai tanpa bebanan kos perubatan.</p>
                         <div class="category-banner-footer">
-                            <span>Mula Terokai Pelan Sakit Kritikal</span>
+                            <span>Lihat Kad Perubatan</span>
                             <i class="fa-solid fa-arrow-right"></i>
                         </div>
                     </div>
 
-                    <!-- Category 3: Takaful Hayat / Hibah -->
-                    <div onclick="openCategory('hibah')" class="category-banner-card">
-                        <div>
-                            <div class="category-banner-icon">
-                                <i class="fa-solid fa-hand-holding-heart"></i>
-                            </div>
-                            <h4>3. Hayat & Hibah</h4>
-                            <p>Jaminan dana tunai pantas terus untuk keselesaan & masa depan insan tersayang.</p>
+                    <!-- Banner 3: Penyakit Kritikal -->
+                    <div class="category-banner-card" id="banner-ci" onclick="openCategoryView('ci')">
+                        <div class="category-banner-icon">
+                            <i class="fa-solid fa-heart-pulse"></i>
                         </div>
+                        <h4>Penyakit Kritikal</h4>
+                        <p>Suntikan tunai pukal bagi menyara kelangsungan hidup jika ditimpa sakit tegar.</p>
                         <div class="category-banner-footer">
-                            <span>Mula Terokai Pelan Hibah</span>
+                            <span>Lihat Pelan Kritikal</span>
                             <i class="fa-solid fa-arrow-right"></i>
                         </div>
                     </div>
 
-                    <!-- Category 4: Legasi Kehidupan -->
-                    <div onclick="openCategory('legasi')" class="category-banner-card">
-                        <div>
-                            <div class="category-banner-icon">
-                                <i class="fa-solid fa-gem"></i>
-                            </div>
-                            <h4>4. Legasi Kehidupan</h4>
-                            <p>Perancangan harta bernilai tinggi & penggantian pendapatan bergenerasi.</p>
+                    <!-- Banner 4: Pelaburan & Simpanan -->
+                    <div class="category-banner-card" id="banner-investment" onclick="openCategoryView('investment')">
+                        <div class="category-banner-icon">
+                            <i class="fa-solid fa-piggy-bank"></i>
                         </div>
+                        <h4>Pelaburan & Simpanan</h4>
+                        <p>Bina tabung masa depan, persediaan persaraan & pendidikan anak secara patuh syariah.</p>
                         <div class="category-banner-footer">
-                            <span>Mula Terokai Pelan Legasi</span>
+                            <span>Lihat Pelan Simpanan</span>
                             <i class="fa-solid fa-arrow-right"></i>
                         </div>
                     </div>
@@ -846,426 +921,454 @@
             </section>
 
             <section id="products-view" class="products-view">
-                <button onclick="showCategoriesView()" class="btn btn-back">
-                    <i class="fa-solid fa-arrow-left"></i> Kembali ke Semua Pilihan
+                <button class="btn btn-back" onclick="showCategoriesView()">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali ke Laman Utama
                 </button>
 
-                <div id="category-title-container" class="category-title-card">
-                    <h4 id="category-title">1. Medikal Kad — i-Great Evolusi</h4>
-                    <p id="category-desc">Pelan i-Great Evolusi disertakan dengan pilihan rider perubatan moden untuk perlindungan hospital komprehensif tanpa kerisauan bil.</p>
+                <div class="category-title-card">
+                    <h4 id="selectedCategoryTitle">Nama Kategori</h4>
+                    <p id="selectedCategoryDesc">Penerangan kategori.</p>
+                    <div id="activeBudgetBadge" class="budget-filter-badge" style="display:none;"></div>
                 </div>
 
-                <div id="products-grid" class="products-grid">
-                    <!-- Dynamic Product Cards Injected Here via JavaScript -->
+                <div class="products-grid" id="productsGridContainer">
+                    <!-- Products dynamically rendered here -->
                 </div>
             </section>
 
         </main>
+
+        <footer>
+            <div class="container">
+                <p class="footer-text-primary">Perunding Takaful Bertauliah — Mz Yas</p>
+                <p class="footer-text-secondary">Great Eastern Takaful Berhad | MTA-781599</p>
+                <p class="footer-copy">&copy; 2026 Hak Cipta Terpelihara.</p>
+            </div>
+        </footer>
     </div>
 
-    <div id="quoteModal" class="modal-overlay">
+    <div class="modal-overlay" id="quoteModal">
         <div class="modal-content">
-            <button onclick="closeModal()" class="modal-close-btn">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            
+            <button class="modal-close-btn" onclick="closeQuoteModal()">&times;</button>
             <div class="modal-header">
                 <div class="modal-icon-box">
-                    <i class="fa-solid fa-paper-plane"></i>
+                    <i class="fa-solid fa-file-signature"></i>
                 </div>
-                <h3>Minta Sebut Harga (Quote)</h3>
-                <p id="modalProductName">i-Great Evolusi</p>
+                <h3>Borang Permohonan Sebut Harga</h3>
+                <p id="modalProductName">Pelan Takaful</p>
             </div>
 
-            <form id="quoteForm" onsubmit="submitQuote(event)" class="quote-form">
-                <!-- Column B: Full Name -->
+            <form class="quote-form" id="takafulForm" onsubmit="handleFormSubmit(event)">
                 <div class="form-group">
-                    <label>Nama Penuh (Full Name) <span>*</span></label>
-                    <input type="text" id="custName" required placeholder="Contoh: Ahmad Bin Razali" class="form-input">
+                    <label for="fullName">Nama Penuh <span>*</span></label>
+                    <input type="text" id="fullName" class="form-input" placeholder="cth: Ahmad Bin Abdullah" required>
                 </div>
-                
-                <!-- Column C & D: Date of Birth & Calculated Age -->
+
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Tarikh Lahir (DOB) <span>*</span></label>
-                        <input type="date" id="custDob" required class="form-input" onchange="calculateAge()">
+                        <label for="dob">Tarikh Lahir <span>*</span></label>
+                        <input type="date" id="dob" class="form-input" onchange="calculateAge()" required>
                     </div>
                     <div class="form-group">
-                        <label>Umur (Age)</label>
-                        <input type="text" id="custAge" readonly placeholder="Auto" class="form-input" style="background-color: #f1f5f9; cursor: not-allowed;">
+                        <label for="age">Umur (Tahun)</label>
+                        <input type="number" id="age" class="form-input" placeholder="Umur" readonly style="background-color: #f1f5f9;">
                     </div>
                 </div>
 
-                <!-- Column E: Occupation -->
                 <div class="form-group">
-                    <label>Pekerjaan (Occupation) <span>*</span></label>
-                    <input type="text" id="custOccupation" required placeholder="Contoh: Jurutera / Guru / Kerajaan" class="form-input">
+                    <label for="occupation">Pekerjaan <span>*</span></label>
+                    <input type="text" id="occupation" class="form-input" placeholder="cth: Jurutera / Guru / Kerani" required>
                 </div>
 
-                <!-- Column F & G: Height & Weight -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Tinggi / Height (cm) <span>*</span></label>
-                        <input type="number" id="custHeight" required placeholder="170" class="form-input">
+                        <label for="height">Tinggi (cm) <span>*</span></label>
+                        <input type="number" id="height" class="form-input" placeholder="170" required>
                     </div>
                     <div class="form-group">
-                        <label>Berat / Weight (kg) <span>*</span></label>
-                        <input type="number" id="custWeight" required placeholder="65" class="form-input">
+                        <label for="weight">Berat (kg) <span>*</span></label>
+                        <input type="number" id="weight" class="form-input" placeholder="65" required>
                     </div>
                 </div>
 
-                <!-- Column H: Smoker/Vape Radio Toggle -->
                 <div class="form-group">
-                    <label>Status Merokok / Vape (Smoker/Vape) <span>*</span></label>
+                    <label>Status Merokok / Vape <span>*</span></label>
                     <div class="radio-toggle-group">
                         <div class="radio-card">
-                            <input type="radio" id="smokerNo" name="custSmoking" value="Tidak" checked>
-                            <label for="smokerNo"><i class="fa-solid fa-xmark"></i> Tidak</label>
+                            <input type="radio" id="smokerNo" name="smoker" value="Tidak" checked>
+                            <label for="smokerNo"><i class="fa-solid fa-xmark" style="color:#10b981;"></i> Tidak</label>
                         </div>
                         <div class="radio-card">
-                            <input type="radio" id="smokerYes" name="custSmoking" value="Ya">
-                            <label for="smokerYes"><i class="fa-solid fa-check"></i> Ya</label>
+                            <input type="radio" id="smokerYes" name="smoker" value="Ya">
+                            <label for="smokerYes"><i class="fa-solid fa-check" style="color:#e11b22;"></i> Ya</label>
                         </div>
                     </div>
                 </div>
 
-                <!-- Column I: Medical History -->
                 <div class="form-group">
-                    <label>Sejarah Perubatan / Penyakit (Medical History) <span>*</span></label>
-                    <input type="text" id="custMedical" required placeholder="Contoh: Tiada / Darah Tinggi / Kencing Manis / Asthma" class="form-input">
+                    <label for="medicalHistory">Sejarah Penyakit / Pembedahan (Jika Ada)</label>
+                    <input type="text" id="medicalHistory" class="form-input" placeholder="Nyatakan jika ada, atau tulis 'Tiada'">
                 </div>
 
-                <!-- Column J: Monthly Budget -->
                 <div class="form-group">
-                    <label>Bajet Bulanan (Monthly Budget) <span>*</span></label>
-                    <select id="custBudget" required class="form-select">
-                        <option value="RM100 - RM150">RM100 - RM150</option>
-                        <option value="RM150 - RM250">RM150 - RM250</option>
-                        <option value="RM250 - RM400">RM250 - RM400</option>
-                        <option value="RM400 ke atas">RM400 ke atas</option>
+                    <label for="monthlyBudget">Anggaran Bajet Bulanan (RM) <span>*</span></label>
+                    <select id="monthlyBudget" class="form-select" required>
+                        <option value="RM50 - RM100">RM50 - RM100 / sebulan</option>
+                        <option value="RM100 - RM150">RM100 - RM150 / sebulan</option>
+                        <option value="RM150 - RM200">RM150 - RM200 / sebulan</option>
+                        <option value="RM200 - RM300">RM200 - RM300 / sebulan</option>
+                        <option value="> RM300">&gt; RM300 / sebulan</option>
                     </select>
                 </div>
 
-                <!-- Column K: Products Interested -->
                 <div class="form-group">
-                    <label>Produk Diminati (Products Interested) <span>*</span></label>
-                    <input type="text" id="custProduct" required class="form-input" style="background-color: #f8fafc;">
-                </div>
-
-                <!-- Column L: Lead Source -->
-                <div class="form-group">
-                    <label>Sumber Link (Lead Source) <span>*</span></label>
-                    <select id="custSource" required class="form-select">
+                    <label for="leadSource">Sumber Link <span>*</span></label>
+                    <select id="leadSource" class="form-select" required>
                         <option value="Facebook">Facebook</option>
                         <option value="Instagram">Instagram</option>
                         <option value="TikTok">TikTok</option>
                         <option value="Threads">Threads</option>
-                        <option value="WhatsApp / Group">WhatsApp / Group</option>
-                        <option value="Rekomendasi Rakan/Keluarga">Rekomendasi Rakan / Keluarga</option>
-                        <option value="Carian Google">Carian Google</option>
+                        <option value="Google / Carian Web">Google / Carian Web</option>
+                        <option value="Rekomendasi Rakan/Keluarga">Rekomendasi Rakan/Keluarga</option>
                         <option value="Lain-lain">Lain-lain</option>
                     </select>
                 </div>
 
-                <div id="submitStatus" class="submit-status"></div>
+                <div class="submit-status" id="submitStatus">Menghantar maklumat...</div>
 
-                <button type="submit" id="submitBtn" class="btn btn-submit">
+                <button type="submit" class="btn btn-submit">
                     <i class="fa-brands fa-whatsapp"></i> Hantar ke WhatsApp
                 </button>
             </form>
         </div>
     </div>
 
-    <footer>
-        <div class="container">
-            <p class="footer-text-primary">Mz Yas | MTA-781599 | 016-4043239</p>
-            <p class="footer-text-secondary">Perunding Takaful Bertauliah Great Eastern Takaful Berhad</p>
-            <p class="footer-copy">Hak Cipta Terpelihara © GETB</p>
-        </div>
-    </footer>
-
     <script>
-        // =========================================================================
-        // GOOGLE APPS SCRIPT CODE FOR YOUR GOOGLE SHEET:
-        // Copy ONLY the JavaScript code between the lines below into Code.gs:
-        // -------------------------------------------------------------------------
-        /*
-        function doPost(e) {
-          try {
-            var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-            var data = JSON.parse(e.postData.contents);
-            
-            sheet.appendRow([
-              data.timestamp || new Date().toLocaleString('ms-MY'),
-              data.fullName || "",
-              data.dob || "",
-              data.age || "",
-              data.occupation || "",
-              data.height || "",
-              data.weight || "",
-              data.smoker || "",
-              data.medicalHistory || "",
-              data.monthlyBudget || "",
-              data.productInterested || "",
-              data.leadSource || ""
-            ]);
-            
-            return ContentService.createTextOutput(JSON.stringify({"result": "success"}))
-              .setMimeType(ContentService.MimeType.JSON);
-          } catch(err) {
-            return ContentService.createTextOutput(JSON.stringify({"result": "error", "error": err.toString()}))
-              .setMimeType(ContentService.MimeType.JSON);
-          }
-        }
-        */
-        // -------------------------------------------------------------------------
-        // =========================================================================
-        const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbxLK6GopqC_hxaF6369FSHOryasULJIjWVKRSIvRx55A2xEDLn3Gor7V0m4P3MXnhur/exec"; 
+        // REPLACE WITH YOUR GOOGLE APPS SCRIPT WEB APP URL (e.g. "https://script.google.com/macros/s/AKfycb.../exec")
+        const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbxLK6GopqC_hxaF6369FSHOryasULJIjWVKRSIvRx55A2xEDLn3Gor7V0m4P3MXnhur/exec";
+        const WHATSAPP_NUMBER = "60164043239";
 
-        // Catalog Data Structure (medikal, ci, hibah, legasi)
-        const productsData = {
-            medikal: {
-                title: "1. Medikal Kad — i-Great Evolusi",
-                desc: "Pelan i-Great Evolusi disertakan dengan pilihan rider perubatan moden untuk perlindungan hospital komprehensif tanpa kerisauan bil.",
-                items: [
-                    {
-                        name: "i-Great Evolusi + i-Medi Evo",
-                        badge: "Perubatan Moden",
-                        tagline: "Rider Medikal Kad Serba Boleh & Mampu Milik",
-                        features: [
-                            "Perlindungan hospital & pembedahan tanpa had seumur hidup",
-                            "Kemudahan kemasukan terus ke hospital panel (Cashless)",
-                            "Perlindungan pesakit luar untuk dialisis buah pinggang & rawatan kanser",
-                            "Elaun tunai harian sekiranya dirawat di Hospital Kerajaan"
-                        ]
-                    },
-                    {
-                        name: "i-Great Evolusi + i-Medi Signature",
-                        badge: "Perlindungan Premium",
-                        tagline: "Rider Medikal Eksklusif & Bilik Privasi Tinggi",
-                        features: [
-                            "Had perlindungan tahunan yang lebih tinggi & bilik hospital eksklusif",
-                            "Tiada Ko-Takaful bagi manfaat hospital terpilih",
-                            "Menampung kos rawatan pembedahan lanjutan & kepakaran khas",
-                            "Perkhidmatan perubatan kecemasan antarabangsa 24/7"
-                        ]
-                    },
-                    {
-                        name: "i-Great Evolusi + i-Medi Shield",
-                        badge: "Perlindungan Asas & Mantap",
-                        tagline: "Benteng Perlindungan Hospital Komprehensif",
-                        features: [
-                            "Menampung kos wad, ICU, perkhidmatan pembedahan & anestetik",
-                            "Perlindungan kecemasan rawatan pesakit luar akibat kemalangan",
-                            "Pilihan deductible fleksibel untuk penjimatan caruman bulanan",
-                            "Penjagaan sokongan dan susulan selepas keluar hospital"
-                        ]
-                    }
+        // Product Catalog Database
+        const productsDatabase = [
+            {
+                id: 'hibah-nova',
+                category: 'hibah',
+                name: 'i-Great Nova',
+                tagline: 'Pelan Hibah Mampu Milik Utama',
+                budgets: ['<100', '100-200', '200-300'],
+                features: [
+                    'Pampasan Kematian & Lumpuh Kekal (TPD)',
+                    'Perlindungan sehingga 300% jika kemalangan',
+                    'Tiada pemeriksaan perubatan untuk perlindungan asas',
+                    'Sesuai untuk ketua keluarga & pembina kerjaya'
                 ]
             },
-            ci: {
-                title: "2. Pampasan Sakit Kritikal (CI) — i-Great Yaqeen",
-                desc: "Perlindungan tunai penyakit kritikal untuk kelangsungan hidup dan persediaan kewangan apabila diuji dengan masalah kesihatan berat.",
-                items: [
-                    {
-                        name: "i-Great Yaqeen",
-                        badge: "Pelan Sakit Kritikal",
-                        tagline: "Perlindungan Sakit Kritikal Komprehensif & Ketenangan Jiwa",
-                        features: [
-                            "Pampasan tunai sekaligus (lump sum) atas diagnosis penyakit kritikal",
-                            "Menutup jurang kehilangan pendapatan semasa tempoh pemulihan",
-                            "Perlindungan meluas merangkumi pelbagai peringkat penyakit kritikal",
-                            "Pengecualian caruman masa depan selepas tuntutan penyakit kritikal diluluskan"
-                        ]
-                    }
+            {
+                id: 'hibah-chinta',
+                category: 'hibah',
+                name: 'i-Great Chinta',
+                tagline: 'Perlindungan Legacy & Hibah Komprehensif',
+                budgets: ['100-200', '200-300'],
+                features: [
+                    'Suntikan dana warisan harta pusaka',
+                    'Manfaat khairat kematian serta-merta',
+                    'Gandaan pampasan untuk kemalangan pengangkutan awam',
+                    'Pilihan tempoh perlindungan fleksibel'
                 ]
             },
-            hibah: {
-                title: "3. Takaful Hayat / Hibah — i-Great Nova & i-Great Chinta",
-                desc: "Jaminan kewangan terus kepada insan tersayang tanpa sekatan proses pusaka. Hadiah kasih sayang teragung untuk keluarga.",
-                items: [
-                    {
-                        name: "i-Great Nova",
-                        badge: "Hibah Berprestasi",
-                        tagline: "Pelan Hibah & Perlindungan Hayat Komprehensif",
-                        features: [
-                            "Pampasan Kematian & Hilang Upaya Kekal (TPD)",
-                            "Pampasan gandaan bagi kematian akibat kemalangan",
-                            "Pilihan penambahan nilai simpanan dan pelaburan fleksibel",
-                            "Penyerahan manfaat hibah secara terus & pantas kepada penerima penama"
-                        ]
-                    },
-                    {
-                        name: "i-Great Chinta",
-                        badge: "Pilihan Utama Keluarga",
-                        tagline: "Perlindungan Kasih Sayang Untuk Pasangan & Anak-anak",
-                        features: [
-                            "Diperkemaskan khas untuk perancangan warisan kewangan keluarga",
-                            "Manfaat tambahan perlindungan penyakit & musibah utama",
-                            "Ganjaran tempoh matang untuk simpanan masa depan",
-                            "Melindungi pasangan daripada bebanan hutang yang ditinggalkan"
-                        ]
-                    }
+            {
+                id: 'medikal-evo',
+                category: 'medical',
+                name: 'i-Great Evolution',
+                tagline: 'Kad Perubatan Generasi Baru',
+                budgets: ['100-200', '200-300'],
+                features: [
+                    'Kad Perubatan Tanpa Tunai (Cashless)',
+                    'Had Tahunan Tinggi tanpa Had Seumur Hidup',
+                    'Perlindungan Elaun Hospital Harian',
+                    'Liputan Rawatan Kanser & Dialisis Buah Pinggang'
                 ]
             },
-            legasi: {
-                title: "4. Legasi Kehidupan — i-Great Majestik",
-                desc: "Pelan perlindungan nilai tinggi (High Net Worth) untuk pengekalan harta, penyelesaian hutang besar, dan warisan legasi bergenerasi.",
-                items: [
-                    {
-                        name: "i-Great Majestik",
-                        badge: "Pelan Eksklusif Legasi",
-                        tagline: "Perancangan Legasi Harta & Simpanan Bernilai Tinggi",
-                        features: [
-                            "Jumlah perlindungan asas tinggi bermula ratusan ribu hingga jutaan ringgit",
-                            "Penyelesaian khas perancangan harta pusaka & cukai perniagaan (Keyman)",
-                            "Strategi penggantian pendapatan tinggi bagi golongan profesional/peniaga",
-                            "Fleksibiliti tempoh pembayaran caruman mengikut keperluan kewangan anda"
-                        ]
-                    }
+            {
+                id: 'medikal-shield',
+                category: 'medical',
+                name: 'i-Great Shield',
+                tagline: 'Perisai Rawatan Hospital Komprehensif',
+                budgets: ['100-200', '200-300'],
+                features: [
+                    'Perlindungan bil hospital swasta terus',
+                    'Manfaat Pesakit Luar Kemalangan',
+                    'Diskaun Tanpa Tuntutan (No Claim Discount)',
+                    'Perkhidmatan Bantuan Kecemasan 24/7'
                 ]
+            },
+            {
+                id: 'medikal-signature',
+                category: 'medical',
+                name: 'i-Great Signature',
+                tagline: 'Perkhidmatan Perubatan VIP & Eksklusif',
+                budgets: ['200-300'],
+                features: [
+                    'Bilik hospital suite / VIP eksklusif',
+                    'Had tahunan perubatan sangat tinggi',
+                    'Perlindungan perubatan antarabangsa',
+                    'Akses ke rangkaian pakar swasta terkemuka'
+                ]
+            },
+            {
+                id: 'ci-yaqeen',
+                category: 'ci',
+                name: 'i-Great Yaqeen',
+                tagline: 'Perisai Kewangan Penyakit Kritikal',
+                budgets: ['<100', '100-200', '200-300'],
+                features: [
+                    'Pampasan tunai pukal bagi 45 penyakit kritikal',
+                    'Suntikan kewangan awal untuk rawatan lanjutan',
+                    'Menggantikan pendapatan terjejas semasa sakit',
+                    'Pelan fleksibel mengikut bajet anda'
+                ]
+            },
+            {
+                id: 'simpanan-majestik',
+                category: 'investment',
+                name: 'i-Great Majestik',
+                tagline: 'Pelaburan & Simpanan Masa Depan',
+                budgets: ['200-300'],
+                features: [
+                    'Simpanan + Pelaburan Patuh Syariah',
+                    'Bonus Kesetiaan & Manfaat Matang Pelan',
+                    'Persediaan Tabung Pendidikan Anak / Persaraan',
+                    'Perlindungan Hayat tambahan disertakan'
+                ]
+            }
+        ];
+
+        const categoryDetails = {
+            'hibah': {
+                title: 'Pelan Hibah & Perlindungan Hayat',
+                desc: 'Pilihan pelan warisan kewangan bagi menjamin masa depan insan tersayang.'
+            },
+            'medical': {
+                title: 'Kad Perubatan / Hospital',
+                desc: 'Akses rawatan hospital swasta terbaik tanpa bimbang kos perubatan.'
+            },
+            'ci': {
+                title: 'Pelan Penyakit Kritikal',
+                desc: 'Suntikan dana tunai pukal bagi menyara kelangsungan hidup jika disahkan sakit tegar.'
+            },
+            'investment': {
+                title: 'Pelan Pelaburan & Simpanan',
+                desc: 'Rancang masa depan, simpanan pendidikan, atau persaraan dengan dana patuh syariah.'
             }
         };
 
-        let currentSelectedProduct = '';
+        let currentSelectedProduct = null;
+        let selectedCategory = null;
 
-        function calculateAge() {
-            const dobInput = document.getElementById('custDob').value;
-            if (!dobInput) return;
-            const dob = new Date(dobInput);
-            const today = new Date();
-            let age = today.getFullYear() - dob.getFullYear();
-            const monthDiff = today.getMonth() - dob.getMonth();
-            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-                age--;
-            }
-            document.getElementById('custAge').value = age > 0 ? age : 0;
-        }
-
-        function openModal(productName) {
-            currentSelectedProduct = productName;
-            document.getElementById('modalProductName').innerText = productName;
-            document.getElementById('custProduct').value = productName;
-            const modal = document.getElementById('quoteModal');
-            modal.classList.add('active');
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('quoteModal');
-            modal.classList.remove('active');
-        }
-
-        function openCategory(catKey) {
-            const catData = productsData[catKey];
-            if (!catData) return;
-
-            document.getElementById('category-title').innerText = catData.title;
-            document.getElementById('category-desc').innerText = catData.desc;
-
-            const grid = document.getElementById('products-grid');
-            grid.innerHTML = '';
-
-            catData.items.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
+        function handleBudgetFilterChange() {
+            const selectedBudget = document.getElementById('mainBudgetFilter').value;
+            const categories = ['hibah', 'medical', 'ci', 'investment'];
+            
+            categories.forEach(cat => {
+                const bannerEl = document.getElementById(`banner-${cat}`);
+                if (!bannerEl) return;
                 
-                let featuresHtml = '';
-                product.features.forEach(feat => {
-                    featuresHtml += `<li class="feature-item"><i class="fa-solid fa-circle-check"></i><span>${feat}</span></li>`;
-                });
-
-                card.innerHTML = `
-                    <div>
-                        <div class="product-card-header">
-                            <span class="badge-tag">${product.badge}</span>
-                            <i class="fa-solid fa-shield-halved"></i>
-                        </div>
-                        <h3 class="product-title">${product.name}</h3>
-                        <p class="product-tagline">${product.tagline}</p>
-                        <hr class="product-divider">
-                        <ul class="feature-list">
-                            ${featuresHtml}
-                        </ul>
-                    </div>
-                    <button onclick="openModal('${product.name}')" class="btn btn-quote">
-                        <i class="fa-solid fa-file-signature"></i> Minta Sebut Harga (Quote)
-                    </button>
-                `;
-                grid.appendChild(card);
+                if (selectedBudget === 'ALL') {
+                    bannerEl.style.display = 'flex';
+                } else {
+                    const hasMatchingProduct = productsDatabase.some(p => p.category === cat && p.budgets.includes(selectedBudget));
+                    if (hasMatchingProduct) {
+                        bannerEl.style.display = 'flex';
+                    } else {
+                        bannerEl.style.display = 'none';
+                    }
+                }
             });
 
+            if (selectedCategory) {
+                renderProductsForCategory(selectedCategory);
+            }
+        }
+
+        function openCategoryView(categoryKey) {
+            selectedCategory = categoryKey;
             document.getElementById('categories-view').style.display = 'none';
             document.getElementById('products-view').style.display = 'block';
+
+            const catInfo = categoryDetails[categoryKey] || { title: 'Produk Takaful', desc: '' };
+            document.getElementById('selectedCategoryTitle').innerText = catInfo.title;
+            document.getElementById('selectedCategoryDesc').innerText = catInfo.desc;
+
+            renderProductsForCategory(categoryKey);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function showCategoriesView() {
             document.getElementById('products-view').style.display = 'none';
             document.getElementById('categories-view').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            selectedCategory = null;
         }
 
-        async function submitQuote(e) {
-            e.preventDefault();
-            
-            const fullName = document.getElementById('custName').value;
-            const dob = document.getElementById('custDob').value;
-            const age = document.getElementById('custAge').value;
-            const occupation = document.getElementById('custOccupation').value;
-            const height = document.getElementById('custHeight').value;
-            const weight = document.getElementById('custWeight').value;
-            const smoker = document.querySelector('input[name="custSmoking"]:checked').value;
-            const medicalHistory = document.getElementById('custMedical').value;
-            const monthlyBudget = document.getElementById('custBudget').value;
-            const productInterested = document.getElementById('custProduct').value;
-            const leadSource = document.getElementById('custSource').value;
+        function renderProductsForCategory(categoryKey) {
+            const budgetFilter = document.getElementById('mainBudgetFilter').value;
+            const container = document.getElementById('productsGridContainer');
+            const activeBadge = document.getElementById('activeBudgetBadge');
 
-            const payload = {
-                timestamp: new Date().toLocaleString('ms-MY'),
-                fullName: fullName,
-                dob: dob,
-                age: age,
-                occupation: occupation,
-                height: height,
-                weight: weight,
-                smoker: smoker,
-                medicalHistory: medicalHistory,
-                monthlyBudget: monthlyBudget,
-                productInterested: productInterested,
-                leadSource: leadSource
-            };
-
-            const statusElem = document.getElementById('submitStatus');
-            statusElem.style.display = "block";
-            statusElem.innerText = "Memproses & membuka WhatsApp...";
-
-            if (GOOGLE_SHEET_URL && GOOGLE_SHEET_URL.trim() !== "") {
-                fetch(GOOGLE_SHEET_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                }).catch(err => console.log('Sheet sync notice:', err));
+            if (budgetFilter !== 'ALL') {
+                activeBadge.innerText = `Menunjukkan pelan untuk bajet: ${budgetFilter === '<100' ? '< RM100' : 'RM ' + budgetFilter}`;
+                activeBadge.style.display = 'inline-block';
+            } else {
+                activeBadge.style.display = 'none';
             }
 
-            const rawMessage = `Salam Mz Yas (MTA-781599), saya berminat sebut harga GETB:\n\n` +
-                `*Produk:* ${productInterested}\n` +
-                `*Nama:* ${fullName}\n` +
-                `*DOB / Umur:* ${dob} (${age} Tahun)\n` +
-                `*Pekerjaan:* ${occupation}\n` +
-                `*Tinggi / Berat:* ${height}cm / ${weight}kg\n` +
-                `*Rokok/Vape:* ${smoker}\n` +
-                `*Sejarah Perubatan:* ${medicalHistory}\n` +
-                `*Bajet Bulanan:* ${monthlyBudget}\n` +
-                `*Sumber Link:* ${leadSource}`;
+            const filteredProducts = productsDatabase.filter(p => {
+                const matchesCategory = p.category === categoryKey;
+                const matchesBudget = (budgetFilter === 'ALL') || p.budgets.includes(budgetFilter);
+                return matchesCategory && matchesBudget;
+            });
 
-            const waPhone = "60164043239";
-            const waUrl = `https://wa.me/${waPhone}?text=${encodeURIComponent(rawMessage)}`;
+            if (filteredProducts.length === 0) {
+                container.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px 20px; color: #64748b;">
+                        <i class="fa-solid fa-filter-circle-xmark" style="font-size: 36px; margin-bottom: 12px; color: #cbd5e1;"></i>
+                        <p style="font-weight: 600;">Tiada pelan padan untuk pilihan bajet ini.</p>
+                        <p style="font-size: 12px; margin-top: 4px;">Sila tukar penapis bajet anda di halaman utama.</p>
+                    </div>
+                `;
+                return;
+            }
 
-            closeModal();
-            statusElem.style.display = "none";
+            container.innerHTML = filteredProducts.map(product => `
+                <div class="product-card">
+                    <div>
+                        <div class="product-card-header">
+                            <span class="badge-tag">Pilihan Popolar</span>
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h4 class="product-title">${product.name}</h4>
+                        <div class="product-tagline">${product.tagline}</div>
+                        <hr class="product-divider">
+                        
+                        <ul class="feature-list">
+                            ${product.features.map(f => `
+                                <li class="feature-item">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    <span>${f}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
 
-            window.location.href = waUrl;
+                    <button class="btn btn-quote" onclick="openQuoteModal('${product.name}')">
+                        <span>Dapatkan Sebut Harga</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function openQuoteModal(productName) {
+            currentSelectedProduct = productName;
+            document.getElementById('modalProductName').innerText = productName;
+            document.getElementById('quoteModal').classList.add('active');
+        }
+
+        function closeQuoteModal() {
+            document.getElementById('quoteModal').classList.remove('active');
+        }
+
+        function calculateAge() {
+            const dobInput = document.getElementById('dob').value;
+            if (!dobInput) return;
+
+            const birthDate = new Date(dobInput);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            document.getElementById('age').value = age > 0 ? age : 0;
+        }
+
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+
+            const fullName = document.getElementById('fullName').value.trim();
+            const dob = document.getElementById('dob').value;
+            const age = document.getElementById('age').value;
+            const occupation = document.getElementById('occupation').value.trim();
+            const height = document.getElementById('height').value;
+            const weight = document.getElementById('weight').value;
+            const smoker = document.querySelector('input[name="smoker"]:checked') ? document.querySelector('input[name="smoker"]:checked').value : 'Tidak';
+            const medicalHistory = document.getElementById('medicalHistory').value.trim() || 'Tiada';
+            const monthlyBudget = document.getElementById('monthlyBudget').value;
+            const leadSource = document.getElementById('leadSource').value;
+            const productInterested = currentSelectedProduct || 'Pelan Takaful';
+            const timestamp = new Date().toLocaleString('ms-MY');
+
+            const statusEl = document.getElementById('submitStatus');
+            statusEl.innerText = "Menghantar maklumat...";
+            statusEl.style.display = "block";
+
+            const payload = {
+                timestamp,
+                fullName,
+                dob,
+                age,
+                occupation,
+                height,
+                weight,
+                smoker,
+                medicalHistory,
+                monthlyBudget,
+                productInterested,
+                leadSource
+            };
+
+            // Send data to Google Sheet Web App if URL is provided
+            if (GOOGLE_SHEET_URL && GOOGLE_SHEET_URL.startsWith("http")) {
+                try {
+                    await fetch(GOOGLE_SHEET_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                } catch (err) {
+                    console.error("Gagal menyimpan ke Google Sheet:", err);
+                }
+            }
+
+            // Format WhatsApp Message
+            const waMessage = 
+`*PERMOHONAN SEBUT HARGA TAKAFUL*
+----------------------------------------
+*Produk:* ${productInterested}
+*Nama:* ${fullName}
+*Tarikh Lahir:* ${dob} (${age} tahun)
+*Pekerjaan:* ${occupation}
+*Tinggi / Berat:* ${height} cm / ${weight} kg
+*Merokok / Vape:* ${smoker}
+*Sejarah Penyakit:* ${medicalHistory}
+*Bajet Bulanan:* ${monthlyBudget}
+*Sumber Link:* ${leadSource}
+----------------------------------------
+_Minta khidmat sebut harga percuma daripada Mz Yas._`;
+
+            const encodedWA = encodeURIComponent(waMessage);
+            const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedWA}`;
+
+            statusEl.innerText = "Membuka WhatsApp...";
+
+            setTimeout(() => {
+                window.open(waUrl, '_blank');
+                closeQuoteModal();
+                statusEl.style.display = "none";
+                document.getElementById('takafulForm').reset();
+            }, 600);
         }
     </script>
 </body>
